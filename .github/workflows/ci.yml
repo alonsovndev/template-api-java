@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, dev]
+    types: [opened, edited, synchronize, reopened]
+  push:
+    branches: [main, dev]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# TBD: java-ci exists only on github-workflows `dev` until that repository merges it into main and
+# cuts the v1 tag. Then pin both callers to an immutable commit SHA (as template-nextjs does) or @v1.
+jobs:
+  pr-title:
+    if: github.event_name == 'pull_request'
+    uses: alonsovndev/github-workflows/.github/workflows/pr-title.yml@dev
+
+  java:
+    uses: alonsovndev/github-workflows/.github/workflows/java-ci.yml@dev
+    with:
+      coverage-xml-path: target/site/jacoco/jacoco.xml
+
+  docker:
+    uses: alonsovndev/github-workflows/.github/workflows/docker-build.yml@dev
