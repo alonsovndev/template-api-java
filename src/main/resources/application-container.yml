@@ -1,0 +1,15 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+app:
+  persistence:
+    driver: ${PERSISTENCE_DRIVER:postgresql}
+    postgres:
+      host: ${POSTGRES_HOST:postgres}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
