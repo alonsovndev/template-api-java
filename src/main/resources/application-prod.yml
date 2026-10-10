@@ -1,0 +1,6 @@
+# Prod takes configuration from process variables only (no dotenv file).
+app:
+  persistence:
+    driver: ${PERSISTENCE_DRIVER:postgresql}
+    postgres:
+      host: ${POSTGRES_HOST}
