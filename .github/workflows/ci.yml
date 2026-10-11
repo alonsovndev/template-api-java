@@ -14,17 +14,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-# TBD: java-ci exists only on github-workflows `dev` until that repository merges it into main and
-# cuts the v1 tag. Then pin both callers to an immutable commit SHA (as template-nextjs does) or @v1.
+# The reusable workflows are pinned to an immutable commit of the github-workflows repository, not a
+# branch, so a push there cannot silently change this repository's CI. Bump the SHA deliberately;
+# switch to the v1 tag once that repository cuts a release.
 jobs:
   pr-title:
     if: github.event_name == 'pull_request'
-    uses: alonsovndev/github-workflows/.github/workflows/pr-title.yml@dev
+    uses: alonsovndev/github-workflows/.github/workflows/pr-title.yml@ce674b9363c508957d93d304cdfbb0e8aa29b16c
 
   java:
-    uses: alonsovndev/github-workflows/.github/workflows/java-ci.yml@dev
+    uses: alonsovndev/github-workflows/.github/workflows/java-ci.yml@ce674b9363c508957d93d304cdfbb0e8aa29b16c
     with:
       coverage-xml-path: target/site/jacoco/jacoco.xml
 
   docker:
-    uses: alonsovndev/github-workflows/.github/workflows/docker-build.yml@dev
+    uses: alonsovndev/github-workflows/.github/workflows/docker-build.yml@ce674b9363c508957d93d304cdfbb0e8aa29b16c
