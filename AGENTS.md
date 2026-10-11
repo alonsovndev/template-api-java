@@ -81,7 +81,7 @@ TBD. `docs/deployment.md` lists the options; CI (`.github/workflows/ci.yml`) onl
 
 - Secrets Manager credential loading (`POSTGRES_CREDENTIALS_SECRET_ARN`), structured logging with request IDs, Sentry and OpenTelemetry, and deployment automation are not implemented.
 - CI runs `make ci`, which excludes the `postgres`-tagged tests; they run only through `make test-postgres`.
-- CI has not run on GitHub; the workflow callers are pinned to `@dev` until `java-ci` is released.
+- The workflow callers are pinned to a `github-workflows` commit SHA; move to `v1` once that tag exists.
 
 <!-- ai-repo-setup:generated:end -->
 
