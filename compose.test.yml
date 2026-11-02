@@ -1,0 +1,17 @@
+# Disposable PostgreSQL for scripts/test-postgres.sh. Bound to a random loopback port, RAM-backed.
+services:
+  postgres-test:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: template_test
+      POSTGRES_DB: template_api_test
+      POSTGRES_PASSWORD: ${TEMPLATE_TEST_PASSWORD:?run scripts/test-postgres.sh}
+    ports:
+      - "127.0.0.1::5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U template_test -d template_api_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 20

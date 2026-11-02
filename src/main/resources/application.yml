@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: ${APP_NAME:template-api-java}
+  profiles:
+    active: ${APP_ENV:local}
+  main:
+    banner-mode: "off"
+
+app:
+  environment: ${APP_ENV:local}
+  name: ${spring.application.name}
+  version: "@project.version@"
+  persistence:
+    driver: ${PERSISTENCE_DRIVER:memory}
+    flyway-locations: classpath:db/migration
+    postgres:
+      host: ${POSTGRES_HOST:localhost}
+      port: ${POSTGRES_PORT:5432}
+      username: ${POSTGRES_USER:}
+      password: ${POSTGRES_PASSWORD:}
+      database: ${POSTGRES_DB:}
+      ssl-mode: ${POSTGRES_SSL_MODE:disable}
+      pool-mode: ${POSTGRES_POOL_MODE:queue}
+      credentials-json: ${POSTGRES_CREDENTIALS_JSON:}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:}
+
+server:
+  port: 8080
+  error:
+    include-message: never
+    include-stacktrace: never
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
